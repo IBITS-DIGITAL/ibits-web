@@ -2,14 +2,54 @@ import * as SC from './styled';
 import Logo from '../../../components/Logo';
 import Button from '../../../components/Button';
 import RollingText from '../../../components/RollingText';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 export default () => {
+  const [isDelayed, setIsDelayed] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsDelayed(false);
+    }, 2000); // 2 seconds delay before showing the component
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <SC.Container>
       <div>
-        <Logo height="200px" colored={false}/>
-        <p>Your Premier Partner</p>
-        <b><RollingText block texts={['B2B', 'B2C', 'B2B2C', 'Business IT Solutions']} /></b>
+        <Logo height="200px" colored={false} hasOnClick={true} />
+        <AnimatePresence>
+          {isDelayed ? (
+            <>
+            <motion.div
+                key="placeholder"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
+                style={{ height: '1em' }}
+              />
+              <b key="rollingText">
+                <RollingText block texts={['B2B', 'B2C', 'B2B2C', 'Business IT Solutions']} />
+              </b>
+            </>
+          ):(
+            <>
+              <motion.p
+                key="title"
+                initial={{ y: '100%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay:0.5 }}
+              >
+                Your Premier Partner
+              </motion.p>
+              <b key="rollingText">
+                <RollingText block texts={['B2B', 'B2C', 'B2B2C', 'Business IT Solutions']} />
+              </b>
+            </>
+          )}
+        </AnimatePresence>
         <Button width='200px' lightTheme>Get in touch</Button>
       </div>
 

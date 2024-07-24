@@ -22,9 +22,9 @@ export const Container = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    // animation: bgTransition 6s infinite;
-    background: inherit;
-      background: rgba(55, 2, 76, 0.5); /* Semi-transparent overlay to enhance the blur effect */
+    animation: bgTransition 6s infinite;
+    // background: inherit;
+    //   background: rgba(55, 2, 76, 0.5); /* Semi-transparent overlay to enhance the blur effect */
     backdrop-filter: blur(190px); /* Apply strong backdrop blur */
     z-index: 5;
   }
